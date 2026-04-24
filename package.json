@@ -6,12 +6,13 @@
 		"dev": "bun run --filter '@apps/*' dev",
 		"start": "bun run --filter '@apps/*' start",
 		"lint": "biome check .",
-		"lint:fix": "biome check --write ."
+		"lint:fix": "biome check --write .",
+		"test": "bun run --filter '@packages/*' test"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.11",
 		"@types/bun": "latest",
-		"typescript": "^5"
+		"typescript": "^5.9.3"
 	},
 	"workspaces": [
 		"packages/*",
