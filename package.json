@@ -28,7 +28,6 @@
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"@types/node": "^22",
-		"shadcn": "^4.4.0",
 		"hono": "^4",
 		"drizzle-orm": "^0.45.2",
 		"drizzle-kit": "^0.31.10"
