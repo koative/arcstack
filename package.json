@@ -24,6 +24,7 @@
 	"catalog": {
 		"hono": "^4",
 		"drizzle-orm": "^0.45.2",
-		"drizzle-kit": "^0.31.10"
+		"drizzle-kit": "^0.31.10",
+		"@types/react": "^19"
 	}
 }

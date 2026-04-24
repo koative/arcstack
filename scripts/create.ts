@@ -149,7 +149,10 @@ const files: FileEntry[] = isApp
 			[join(dir, "package.json"), sharedPackageJson()],
 			[join(dir, "tsconfig.json"), tsconfig()],
 			[join(dir, "index.ts"), sharedEntrypoint()],
-			[join(dir, "index.test.ts"), `import { describe, expect, it } from "bun:test";\nimport { ${toCamel(name)} } from ".";\n\ndescribe("${name}", () => {\n\tit("exists", () => {\n\t\texpect(${toCamel(name)}).toBeDefined();\n\t});\n});\n`],
+			[
+				join(dir, "index.test.ts"),
+				`import { describe, expect, it } from "bun:test";\nimport { ${toCamel(name)} } from ".";\n\ndescribe("${name}", () => {\n\tit("exists", () => {\n\t\texpect(${toCamel(name)}).toBeDefined();\n\t});\n});\n`,
+			],
 			[join(dir, "README.md"), readme()],
 		];
 
@@ -159,14 +162,18 @@ mkdirSync(isApp ? join(dir, "src") : dir, { recursive: true });
 
 for (const [path, content] of files) {
 	await Bun.write(path, content);
-	ok(`${DIM}${path.replace(root + "/", "")}${RESET}`);
+	ok(`${DIM}${path.replace(`${root}/`, "")}${RESET}`);
 }
 
 // --- bun install ---
 
 console.log();
 info("Running bun install…");
-const proc = Bun.spawn(["bun", "install"], { cwd: root, stdout: "inherit", stderr: "inherit" });
+const proc = Bun.spawn(["bun", "install"], {
+	cwd: root,
+	stdout: "inherit",
+	stderr: "inherit",
+});
 await proc.exited;
 
 console.log(`\n${GREEN}${BOLD}Done!${RESET} ${pkgName} is ready.\n`);
