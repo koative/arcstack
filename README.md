@@ -1,36 +1,51 @@
-# Bun Monorepo Template
+# bunstack
 
-A minimal monorepo template using Bun workspaces.
+A Bun-native monorepo template using built-in workspaces — no Turborepo or other build orchestration.
 
 ## Structure
 
 ```
-├── apps/
-│   ├── server/    # Backend application
-│   └── client/    # Frontend application
-└── packages/
-    └── shared/    # Shared utilities
+apps/
+  client/   → @apps/client   (frontend)
+  server/   → @apps/server   (backend)
+packages/
+  shared/   → @packages/shared  (shared code)
 ```
 
 ## Getting Started
 
 ```bash
 bun install
+bun run dev       # run all apps in watch mode (parallel)
 ```
 
-## Run Apps
+## Scripts
 
-```bash
-bun run --filter @apps/server start
-bun run --filter @apps/client start
-```
+| Command | Description |
+|---|---|
+| `bun run dev` | Run all apps in watch mode |
+| `bun run start` | Run all apps in production mode |
+| `bun run build` | Build all apps |
+| `bun run typecheck` | Type-check all workspaces |
+| `bun run lint` | Lint with Biome |
+| `bun run lint:fix` | Auto-fix with Biome |
+| `bun run test` | Run tests in `packages/` |
 
 ## Add Dependencies
 
 ```bash
-# Root
+# Root (dev tooling)
 bun add -d <package>
 
 # Specific workspace
 bun add --filter @apps/server <package>
+bun add --filter @apps/client <package>
+bun add --filter @packages/shared <package>
 ```
+
+## Conventions
+
+- Bun APIs only — no Node/npm equivalents (see `CLAUDE.md` for the full list)
+- Tests live alongside source as `*.test.ts` and are run with `bun test`
+- Linting via [Biome](https://biomejs.dev)
+- Path aliases: `@packages/*` and `@apps/*` resolve via root `tsconfig.json`
