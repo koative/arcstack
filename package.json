@@ -4,7 +4,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "bun run --filter '@apps/*' dev",
+		"build": "bun run --filter '@apps/*' build",
 		"start": "bun run --filter '@apps/*' start",
+		"typecheck": "bun run --filter '*' typecheck",
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"test": "bun run --filter '@packages/*' test"
