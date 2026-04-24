@@ -43,7 +43,7 @@ const name = rawName.toLowerCase().replace(/[^a-z0-9-]/g, "-");
 const isApp = type === "app";
 const root = join(import.meta.dir, "..");
 const dir = isApp ? join(root, "apps", name) : join(root, "packages", name);
-const pkgName = isApp ? `@apps/${name}` : `@packages/${name}`;
+const pkgName = isApp ? `@apps/${name}` : `@${name}`;
 const tsconfigDepth = isApp ? "../../tsconfig.json" : "../../tsconfig.json";
 
 // --- guard ---
@@ -67,7 +67,7 @@ const appPackageJson = () => `{
 \t\t"typecheck": "tsc --noEmit"
 \t},
 \t"dependencies": {
-\t\t"@packages/shared": "workspace:*"
+\t\t"@shared": "workspace:*"
 \t}
 }
 `;

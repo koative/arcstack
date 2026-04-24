@@ -32,7 +32,9 @@
 		// Paths
 		"baseUrl": ".",
 		"paths": {
-			"@packages/*": ["packages/*/index.ts"],
+			"@shared": ["packages/shared/index.ts"],
+			"@ui/utils": ["packages/ui/lib/utils.ts"],
+			"@ui/*": ["packages/ui/components/ui/*", "packages/ui/lib/*"],
 			"@apps/*": ["apps/*/index.ts"]
 		}
 	}
