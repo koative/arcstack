@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "arcstack",
+      "name": "eros",
       "devDependencies": {
         "@biomejs/biome": "2.3.11",
         "@types/bun": "latest",

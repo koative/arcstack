@@ -1,6 +1,6 @@
-# arcstack
+# eros ❤️‍🔥
 
-A Bun-native monorepo template using built-in workspaces — no Turborepo or other build orchestration.
+A Bun-native monorepo using built-in workspaces — no Turborepo or other build orchestration.
 
 ## Structure
 

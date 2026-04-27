@@ -4,7 +4,7 @@ import "@eros/ui/globals.css";
 import { ThemeProvider } from "@eros/ui/providers/theme-provider";
 
 export const metadata: Metadata = {
-	title: "arcstack",
+	title: "eros ❤️‍🔥",
 	description: "Bun-native monorepo",
 };
 
