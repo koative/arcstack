@@ -8,10 +8,12 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@arc/ui": "workspace:*",
+		"@eros/ui": "workspace:*",
+		"lucide-react": "^1.9.0",
 		"next": "catalog:",
 		"react": "catalog:",
-		"react-dom": "catalog:"
+		"react-dom": "catalog:",
+		"sonner": "^2.0.7"
 	},
 	"devDependencies": {
 		"@tailwindcss/postcss": "catalog:",

@@ -1,5 +1,5 @@
 {
-	"name": "@arc/ui",
+	"name": "@eros/ui",
 	"type": "module",
 	"private": true,
 	"exports": {
@@ -7,6 +7,9 @@
 		"./globals.css": "./src/styles/globals.css",
 		"./postcss.config": "./postcss.config.ts",
 		"./providers/*": "./src/providers/*.tsx",
+		"./lib/*": "./src/lib/*.ts",
+		"./hooks/*": "./src/hooks/*.ts",
+		"./components/*": "./src/components/*.tsx",
 		"./*": "./src/components/*.tsx"
 	},
 	"scripts": {
@@ -23,14 +26,23 @@
 		"react-dom": "catalog:"
 	},
 	"dependencies": {
-		"next-themes": "catalog:",
-		"shadcn": "catalog:",
-		"tailwindcss": "catalog:",
-		"tw-animate-css": "catalog:",
 		"@base-ui/react": "^1.4.1",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
+		"cmdk": "^1.1.1",
+		"date-fns": "^4.1.0",
+		"embla-carousel-react": "^8.6.0",
+		"input-otp": "^1.4.2",
 		"lucide-react": "^1.9.0",
-		"tailwind-merge": "^3.5.0"
+		"next-themes": "^0.4.6",
+		"react-day-picker": "^9.14.0",
+		"react-resizable-panels": "^4.10.0",
+		"recharts": "3.8.0",
+		"shadcn": "catalog:",
+		"sonner": "^2.0.7",
+		"tailwind-merge": "^3.5.0",
+		"tailwindcss": "catalog:",
+		"tw-animate-css": "catalog:",
+		"vaul": "^1.1.2"
 	}
 }
