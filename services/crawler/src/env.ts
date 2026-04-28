@@ -9,6 +9,10 @@ const Schema = z.object({
 	WORKER_CONCURRENCY: z.coerce.number().int().positive().default(4),
 	BULLMQ_PREFIX: z.string().default("eros:crawl"),
 	RECRAWL_INTERVAL_MS: z.coerce.number().int().positive().default(60_000),
+	ENGINE_API_KEY: z.preprocess(
+		(v) => (v === "" ? undefined : v),
+		z.string().min(16).optional(),
+	),
 });
 
 export type Env = z.infer<typeof Schema>;

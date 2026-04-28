@@ -60,6 +60,7 @@ services:
       WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-4}
       BULLMQ_PREFIX: ${BULLMQ_PREFIX:-eros:crawl}
       RECRAWL_INTERVAL_MS: ${RECRAWL_INTERVAL_MS:-60000}
+      ENGINE_API_KEY: ${ENGINE_API_KEY:-}
     depends_on:
       postgres: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -77,6 +78,9 @@ services:
       NODE_ENV: production
       PORT: 1002
       CRAWLER_API_URL: http://crawler:1337
+      CRAWLER_API_KEY: ${ENGINE_API_KEY:-}
+      ADMIN_USER: ${ADMIN_USER:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
     depends_on:
       crawler: { condition: service_started }
     networks: [eros]

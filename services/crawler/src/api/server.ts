@@ -5,6 +5,8 @@ import { z } from "zod";
 import type { JobSubmitter } from "../engine/submit.ts";
 import type { HandlerRegistry } from "../engine/registry.ts";
 import type { CrawlStore, QueueAdapter } from "@eros/crawler-core";
+import { env } from "../env.ts";
+import { bearerAuth } from "./middleware/auth.ts";
 
 const SubmitSchema = z.object({
 	source: z.string().min(1),
@@ -40,6 +42,7 @@ export function createApi(deps: ApiDeps): Hono {
 
 	app.use("*", honoLogger());
 	app.use("*", cors({ origin: "*" }));
+	app.use("*", bearerAuth(env.ENGINE_API_KEY));
 
 	app.get("/health", (c) => c.json({ ok: true }));
 
