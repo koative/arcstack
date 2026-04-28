@@ -1,4 +1,5 @@
 const BASE = process.env.CRAWLER_API_URL ?? "http://localhost:1337";
+const KEY = process.env.CRAWLER_API_KEY ?? "";
 
 export interface CrawlerHandlerInfo {
 	source: string;
@@ -50,9 +51,15 @@ export interface ListTargetsResponse {
 }
 
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
+	const headers: Record<string, string> = {
+		"content-type": "application/json",
+		...((init?.headers as Record<string, string> | undefined) ?? {}),
+	};
+	if (KEY) headers.authorization = `Bearer ${KEY}`;
+
 	const res = await fetch(`${BASE}${path}`, {
 		...init,
-		headers: { "content-type": "application/json", ...(init?.headers ?? {}) },
+		headers,
 		cache: "no-store",
 	});
 	if (!res.ok) {

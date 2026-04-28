@@ -1,6 +1,6 @@
 import type { ConnectionOptions } from "bullmq";
 import { env } from "../env.ts";
-import { db } from "../db/client.ts";
+import { bunSql, db } from "../db/client.ts";
 import { createRedis } from "../infra/redis.ts";
 import { RedisDedup } from "../infra/dedup.ts";
 import { PostgresCrawlStore } from "../infra/store.ts";
@@ -11,12 +11,13 @@ import { logger } from "../infra/logger.ts";
 import { HandlerRegistry } from "./registry.ts";
 import { JobSubmitter } from "./submit.ts";
 import { CrawlWorkerPool } from "./worker.ts";
+import { RecrawlScheduler } from "./scheduler.ts";
 
 export function buildEngine() {
 	const redis = createRedis();
 	const connection: ConnectionOptions = { url: env.REDIS_URL };
 
-	const store = new PostgresCrawlStore(db);
+	const store = new PostgresCrawlStore(db, bunSql);
 	const dedup = new RedisDedup(redis, env.BULLMQ_PREFIX);
 	const queue = new BullMqQueue(connection);
 	const fetcher = new HttpFetcher();
@@ -33,6 +34,23 @@ export function buildEngine() {
 		log: logger,
 		connection,
 	});
+	const scheduler = new RecrawlScheduler(store, submitter, logger, {
+		intervalMs: env.RECRAWL_INTERVAL_MS,
+	});
+
+	async function syncRegistryToDatabase(): Promise<void> {
+		await Promise.all(
+			registry.list().map((h) =>
+				store.upsertSource({
+					source: h.source,
+					rateLimitPerMinute: h.config?.rateLimit?.perMinute,
+					defaultConcurrency: h.config?.concurrency,
+					recrawlIntervalSec: h.config?.recrawlIntervalSec,
+					respectRobotsTxt: h.config?.respectRobotsTxt ?? false,
+				}),
+			),
+		);
+	}
 
 	return {
 		registry,
@@ -41,8 +59,10 @@ export function buildEngine() {
 		dedup,
 		submitter,
 		workers,
+		scheduler,
 		redis,
 		log: logger,
+		syncRegistryToDatabase,
 	};
 }
 

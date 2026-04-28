@@ -2,13 +2,16 @@ import { serve } from "bun";
 import { env } from "./env.ts";
 import { buildEngine } from "./engine/composition.ts";
 import { createApi } from "./api/server.ts";
+import { sandboxCrawler } from "./handlers/sandbox.ts";
 
 const engine = buildEngine();
 
-// register handlers here as they are implemented:
-// engine.registry.register(bunkrCrawler);
+engine.registry.register(sandboxCrawler);
+
+await engine.syncRegistryToDatabase();
 
 engine.workers.start();
+engine.scheduler.start();
 
 const app = createApi({
 	registry: engine.registry,
@@ -31,6 +34,7 @@ engine.log.info("crawler engine ready", {
 const shutdown = async (sig: string) => {
 	engine.log.info("shutdown initiated", { sig });
 	server.stop();
+	engine.scheduler.stop();
 	await engine.workers.stop();
 	await engine.queue.close();
 	engine.redis.disconnect();
